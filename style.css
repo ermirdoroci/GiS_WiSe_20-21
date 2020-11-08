@@ -47,4 +47,105 @@ body {
       @keyframes sweep {
         0%    {opacity: 0; margin-left: -10px}
         100%  {opacity: 1; margin-left: 0px}
+
+      }
+      .myDiv {
+        background: rgb(173, 164, 164);
+        color: white;
+
+        width: 300px;
+
+        padding: 10px 10px 20px 10px;
+        border: 5px double black;
+        margin: 0 auto;
+        
+    }
+    
+    #navcontainer { width: 200px; }
+
+    #navcontainer ul
+    {
+    margin-left: 0;
+    padding-left: 0;
+    list-style-type: none;
+    font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    #navcontainer a
+    {
+    display: block;
+    padding: 3px;
+    width: 160px;
+    background-color: rgb(62, 71, 80);
+    border-bottom: 1px solid #eee;
+    }
+    
+    #navcontainer a:link, #navlist a:visited
+    {
+    color: #EEE;
+    text-decoration: none;
+    }
+    
+    #navcontainer a:hover
+    {
+    background-color: #369;
+    color: #fff;
+    }
+    .myHOne {
+        color: black;
+        font-weight: bold;
+        font-style: italic;
+        letter-spacing: .1em;
+        text-shadow: 0 0 5px white,
+        0 0 10px white,
+        0 0 20px black,
+        0 0 40px black,
+        0 0 60px black,
+        0 0 90px black,
+        0 0 120px black,
+        0 0 160px black;
+    }
+    #HTwo {
+        font-size: 20;
+    }
+    a {
+        color:grey;
+    }
+    div>ul {
+        background-color: grey;
+    }
+    div li{
+        font-style: italic;
+    }
+    p+h1{
+        background-color:grey;
+    }
+   div label{
+        font-style: italic;
+    }
+    div>input{
+        font-style: italic;
+    }
+    div>input{
+        background-color: rgb(192, 192, 192);
+    }
+    div>textarea{
+        background-color: rgb(192, 192, 192); 
+    }
+    .box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* flex-direction: row; */
+      }
+      @media screen and (max-width: 600px){
+          h1{
+            font-size: 20;
+          }
+          h2{
+            font-size: 15;
+          }
+          h3{
+            font-size: 10;
+          }
       }
