@@ -1,0 +1,5 @@
+{
+"koepfe": [{ "name": "kopf1", "link": "./kopf1.jpg"}, { "name": "kopf2", "link": "./kopf2.jpg"}, { "name": "kopf3", "link": "./kopf3.jpg"}],
+"ruempfe": [{ "name": "rumpf1", "link": "./rumpf1.jpg"}, { "name": "rumpf2", "link": "./rumpf2.jpg"}, { "name": "rumpf3", "link": "./rumpf3.jpg"}],
+"beine": [{ "name": "beine1", "link": "./beine1.jpg"}, { "name": "beine2", "link": "./beine2.jpg"}, { "name": "beine3", "link": "./beine3.jpg"}]
+}
