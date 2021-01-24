@@ -1,6 +1,6 @@
 import * as Http from "http";
-import * as querystring from "querystring";
 import * as Mongo from "mongodb";
+import * as url from "url";
 
 export namespace P_3_1Server {
 
@@ -17,7 +17,6 @@ export namespace P_3_1Server {
     Sname: string;
     EMail: string;
     Password: string;
-    City: string;
   }
 
   interface LoginDaten {
@@ -35,7 +34,7 @@ export namespace P_3_1Server {
   if (!port)
     port = 8100;
 
-  let pfadDatenbank: string = "mongodb+srv://babo:passwort@ermir.jqdwu.mongodb.net/Daten?retryWrites=true&w=majority"; //mongodb+srv://<username>:<password>@ermir.jqdwu.mongodb.net/<dbname>?retryWrites=true&w=majority;
+  let pfadDatenbank: string = "mongodb+srv://babo:gis2021@ermir.jqdwu.mongodb.net/Daten?retryWrites=true&w=majority";
 
 
   // Starte Server auf Port 8100
@@ -53,68 +52,56 @@ export namespace P_3_1Server {
 
     await mongoClient.connect();
 
+    console.log("Database connected");
+
     daten = mongoClient.db("Daten").collection("Collection");
   }
-
-
   function handleListen(): void {
     console.log("Listening");
   }
+  async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): Promise<void> {
 
+    let adresse: url.UrlWithParsedQuery = url.parse(_request.url, true);
+    let urlpath: string | null = adresse.pathname;
 
-  function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
-
-    if (_request.method == "POST") {
-      //    console.log("fehlermeldung");
-      //    else {
-      let body: string = "";
-      _request.on("data", data => {
-        body += data.toString();
-        //   }
-      });
+    let daten: Daten = adresse.query;
 
 
 
-      _request.on("end", async () => {
+    // let daten: Daten = querystring.parse(body);
+    //Alle User abfragen
+    if (urlpath == "//benutzerliste") {
+      _response.setHeader("content-type", "text/html; charset=utf-8");
+      _response.setHeader("Access-Control-Allow-Origin", "*");
+      _response.write(await namenAbrufen());
+      _response.end();
+    }
+    //Login
+    else if (urlpath == "//login") {
 
-
-
-        let daten: Daten = querystring.parse(body);
-        //Login
-        if (JSON.stringify(daten).startsWith("{\"EMail")) {
-          _response.setHeader("content-type", "text/html; charset=utf-8");
-          _response.setHeader("Access-Control-Allow-Origin", "*");
-          _response.write(await login(daten));
-          _response.end();
-
-        }
-        //Alle User abfragen
-        else if (JSON.stringify(daten) == "{}") {
-          _response.setHeader("content-type", "text/html; charset=utf-8");
-          _response.setHeader("Access-Control-Allow-Origin", "*");
-          _response.write(await namenAbrufen());
-          _response.end();
-        }
-
-        //Registrierung
-        else {
-          _response.setHeader("content-type", "text/html; charset=utf-8");
-          _response.setHeader("Access-Control-Allow-Origin", "*");
-          _response.write(registrierung(await alleAbrufen(), daten));
-          _response.end();
-        }
-
-
-      });
+      _response.setHeader("content-type", "text/html; charset=utf-8");
+      _response.setHeader("Access-Control-Allow-Origin", "*");
+      _response.write(await login(daten));
+      _response.end();
 
     }
+    //Registrierung
+    else if (urlpath == "//index") {
+      _response.setHeader("content-type", "text/html; charset=utf-8");
+      _response.setHeader("Access-Control-Allow-Origin", "*");
+      _response.write(registrierung(await alleAbrufen(), daten));
+      _response.end();
+    }
+
+
+
+
+
 
   }
 
   async function login(daten1: Daten): Promise<string> {
     let alleDaten: AlleDaten[] = await daten.find().toArray();
-
-
 
     let datenObjekt: LoginDaten = JSON.parse(JSON.stringify(daten1));
 
@@ -122,13 +109,13 @@ export namespace P_3_1Server {
 
       for (let i: number = 0; i < alleDaten.length; i++) {
 
-        if (alleDaten[i].EMail == datenObjekt.EMail && (alleDaten[i].Password == datenObjekt.Password)) { return "Erfolgreich angemeldet. Willkommen zurück "; }
+        if (alleDaten[i].EMail == datenObjekt.EMail && (alleDaten[i].Password == datenObjekt.Password)) { return "Erfolgreich angemeldet."; }
 
       }
 
     }
 
-    return "Die Kombination aus Email und Passwort ist leider nicht in unserer Datenbank. Versuchen Sie es bitte erneut.";
+    return "Falsche E-Mail Adresse oder Passwort.";
   }
   async function alleAbrufen(): Promise<AlleDaten[]> {
     let alleDaten: AlleDaten[] = await daten.find().toArray();
@@ -136,24 +123,21 @@ export namespace P_3_1Server {
     return alleDaten;
   }
 
-
-
   async function namenAbrufen(): Promise<string> {
     let alleDaten: AlleDaten[] = await daten.find().toArray();
     let alleNamen: string = "";
     let zahl: number = 1;
 
-    if (alleDaten.length < 1) { return "Momentan befindet sich noch kein registrierter Nutzer in unserer Datenbank  "; }
+    if (alleDaten.length < 1) { return "Keine Nutzer"; }
 
     for (let x: number = 0; x < alleDaten.length; x++) {
-      alleNamen = alleNamen + zahl + ". " + alleDaten[x].Fname + " " + alleDaten[x].Sname + ", ";
+      alleNamen = alleNamen + zahl + ". " + alleDaten[x].Fname + " " + alleDaten[x].Sname + ". ";
       zahl++;
     }
 
     return alleNamen;
   }
 
-  
   function registrierung(alleDaten: AlleDaten[], storeDaten: Daten): string {
 
     let daten1: string = JSON.stringify(storeDaten);
@@ -165,25 +149,19 @@ export namespace P_3_1Server {
 
       for (let x: number = 0; x < alleDaten.length; x++) {
 
-        if (alleDaten[x].EMail == datenObjekt.EMail) { return "Die benutze Email befindet sich bereits in unserer Datenbank. Loggen Sie sich ein oder registrieren Sie sich mit einer anderen."; }
+        if (alleDaten[x].EMail == datenObjekt.EMail) { return "E-Mail Adresse ist bereits in unserer Datenbank."; }
 
       }
 
     }
+
     daten.insertOne(storeDaten);
-   // storeData(storeDaten);
-    return "Ihre Daten wurden erfolgreich gespeichert";
+
+    return "Daten wurden abgespeichert";
 
 
 
   }
-
-
- // function storeData(_daten: Daten): void {
-  //  daten.insertOne(_daten);
-  //}
-
-
 
 
 
