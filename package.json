@@ -1,0 +1,29 @@
+{
+  "name": "stark-bastion-19601",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@types/mongodb": "^3.6.3",
+    "mongodb": "^3.6.3",
+    "express": "*",
+    "body-parser": "*",
+    "bcrypt": "^0.8.5" 
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.12"
+  },
+  "scripts": {
+    "start": "node Aufgabe_3/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ermirdoroci/GiS_WiSe_20-21.git"
+  },
+  "author": "doroci",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ermirdoroci/GiS_WiSe_20-21/issues"
+  },
+  "homepage": "https://github.com/ermirdoroci/GiS_WiSe_20-21#readme",
+  "description": ""
+}
