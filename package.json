@@ -4,10 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "@types/mongodb": "^3.6.3",
-    "mongodb": "^3.6.3",
-    "express": "*",
-    "body-parser": "*",
-    "bcrypt": "^0.8.5" 
+    "mongodb": "^3.6.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.12"
