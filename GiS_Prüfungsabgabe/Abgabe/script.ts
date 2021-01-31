@@ -73,11 +73,29 @@ async function handleRequest(_request: Http.IncomingMessage, _response: Http.Ser
         _response.end();
     }
 
+    //Login
+    else if (urlpath == "//login") {
+
+        _response.setHeader("content-type", "text/html; charset=utf-8");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
+        _response.write(await login(daten));
+        _response.end();
+
+    }
+    //Registrierung
+    else if (urlpath == "//index") {
+        _response.setHeader("content-type", "text/html; charset=utf-8");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
+        _response.write(registrierung(await alleAbrufen(), daten));
+        _response.end();
+   //     _response.write(bildanzeige(daten));
+    }
 
 
 
 
-    async function login(daten1: Daten): Promise<string> {
+
+    async function login(daten1: DatenTest): Promise<string> {
         let alleDaten: AlleDaten[] = await daten.find().toArray();
 
         let datenObjekt: LoginDaten = JSON.parse(JSON.stringify(daten1));
@@ -139,9 +157,29 @@ async function handleRequest(_request: Http.IncomingMessage, _response: Http.Ser
 
 
     }
+    //  function bildanzeige(alleDaten: AlleDaten[], storeDaten: DatenTest): string {
 
 
 
+    async function bildanzeige(storeDaten: DatenTest): Promise<void> {
+        console.log("huhu");
+        let daten1: string = JSON.stringify(storeDaten);
+        let datenObjekt: AlleDaten = JSON.parse(daten1);
+
+
+        // let response: Response = await fetch(_url);
+        //let speicher: Speicher = JSON.parse(JSON.stringify(await response.json()));
+
+
+        //       speicher.koepfe.forEach(kopf => {
+
+        let imgi1: HTMLImageElement = document.createElement("img");
+        imgi1.src = datenObjekt.Bild;
+        
+        document.body.appendChild(imgi1);
+
+
+    }
 
 
 

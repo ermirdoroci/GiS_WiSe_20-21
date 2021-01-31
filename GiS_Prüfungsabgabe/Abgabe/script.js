@@ -36,6 +36,21 @@ async function handleRequest(_request, _response) {
         _response.write(await namenAbrufen());
         _response.end();
     }
+    //Login
+    else if (urlpath == "//login") {
+        _response.setHeader("content-type", "text/html; charset=utf-8");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
+        _response.write(await login(daten));
+        _response.end();
+    }
+    //Registrierung
+    else if (urlpath == "//index") {
+        _response.setHeader("content-type", "text/html; charset=utf-8");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
+        _response.write(registrierung(await alleAbrufen(), daten));
+        _response.end();
+        //     _response.write(bildanzeige(daten));
+    }
     async function login(daten1) {
         let alleDaten = await daten.find().toArray();
         let datenObjekt = JSON.parse(JSON.stringify(daten1));
@@ -77,6 +92,18 @@ async function handleRequest(_request, _response) {
         }
         daten.insertOne(storeDaten);
         return "Daten wurden abgespeichert";
+    }
+    //  function bildanzeige(alleDaten: AlleDaten[], storeDaten: DatenTest): string {
+    async function bildanzeige(storeDaten) {
+        console.log("huhu");
+        let daten1 = JSON.stringify(storeDaten);
+        let datenObjekt = JSON.parse(daten1);
+        // let response: Response = await fetch(_url);
+        //let speicher: Speicher = JSON.parse(JSON.stringify(await response.json()));
+        //       speicher.koepfe.forEach(kopf => {
+        let imgi1 = document.createElement("img");
+        imgi1.src = datenObjekt.Bild;
+        document.body.appendChild(imgi1);
     }
 }
 //# sourceMappingURL=script.js.map
