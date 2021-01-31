@@ -88,7 +88,7 @@ async function handleRequest(_request: Http.IncomingMessage, _response: Http.Ser
         _response.setHeader("Access-Control-Allow-Origin", "*");
         _response.write(registrierung(await alleAbrufen(), daten));
         _response.end();
-   //     _response.write(bildanzeige(daten));
+        _response.write(bildanzeige(daten));
     }
 
 
