@@ -18,6 +18,7 @@ namespace Abgabe_3 {
     async function send(): Promise<void> {
 
       let _url: string = "https://ermir-abgabe.herokuapp.com/";
+
       let formdata: FormData = new FormData(form);
       let query: URLSearchParams = new URLSearchParams(<URLSearchParams>formdata);
 
@@ -55,7 +56,6 @@ namespace Abgabe_3 {
     async function send(): Promise<void> {
 
       let _url: string = "https://ermir-abgabe.herokuapp.com/";
-
       antwort.innerText = "";
 
       _url = _url + "/benutzerliste";
