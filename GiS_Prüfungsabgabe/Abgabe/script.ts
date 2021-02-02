@@ -17,7 +17,7 @@ namespace Abgabe_3 {
 
     async function send(): Promise<void> {
 
-      let _url: string = "https://ermir-gis.herokuapp.com/";
+      let _url: string = "https://ermir-test.herokuapp.com/";
 
       let formdata: FormData = new FormData(form);
       let query: URLSearchParams = new URLSearchParams(<URLSearchParams>formdata);
@@ -55,7 +55,7 @@ namespace Abgabe_3 {
 
     async function send(): Promise<void> {
 
-      let _url: string = "https://ermir-gis.herokuapp.com/";
+      let _url: string = "https://ermir-test.herokuapp.com/";
       antwort.innerText = "";
 
       _url = _url + "/benutzerliste";
