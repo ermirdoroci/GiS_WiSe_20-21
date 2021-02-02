@@ -1,100 +1,42 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.P_3_1Server = void 0;
-const Http = require("http");
-const Mongo = require("mongodb");
-const url = require("url");
-var P_3_1Server;
-(function (P_3_1Server) {
-    let daten;
-    let port = Number(process.env.PORT);
-    if (!port)
-        port = 8100;
-    let pfadDatenbank = "mongodb+srv://babo:gis2021@ermir.jqdwu.mongodb.net/Daten?retryWrites=true&w=majority";
-    // Starte Server auf Port 8100
-    let server = Http.createServer();
-    server.addListener("request", handleRequest);
-    server.addListener("listening", handleListen);
-    server.listen(port);
-    verbindungDatenbank(pfadDatenbank);
-    async function verbindungDatenbank(pfad) {
-        let optionen = { useNewUrlParser: true, useUnifiedTopology: true };
-        let mongoClient = new Mongo.MongoClient(pfad, optionen);
-        await mongoClient.connect();
-        console.log("Database connected");
-        daten = mongoClient.db("Daten").collection("Collection");
-    }
-    function handleListen() {
-        console.log("Listening");
-    }
-    async function handleRequest(_request, _response) {
-        let adresse = url.parse(_request.url, true);
-        let urlpath = adresse.pathname;
-        let daten = adresse.query;
-        // let daten: Daten = querystring.parse(body);
-        //Alle User abfragen
-        if (urlpath == "//benutzerliste") {
-            _response.setHeader("content-type", "text/html; charset=utf-8");
-            _response.setHeader("Access-Control-Allow-Origin", "*");
-            _response.write(await namenAbrufen());
-            _response.end();
-        }
-        //Login
-        else if (urlpath == "//login") {
-            _response.setHeader("content-type", "text/html; charset=utf-8");
-            _response.setHeader("Access-Control-Allow-Origin", "*");
-            _response.write(await login(daten));
-            _response.end();
-        }
-        //Registrierung
-        else if (urlpath == "//index") {
-            _response.setHeader("content-type", "text/html; charset=utf-8");
-            _response.setHeader("Access-Control-Allow-Origin", "*");
-            _response.write(registrierung(await alleAbrufen(), daten));
-            _response.end();
-        }
-    }
-    async function login(daten1) {
-        let alleDaten = await daten.find().toArray();
-        let datenObjekt = JSON.parse(JSON.stringify(daten1));
-        if (alleDaten.length > 0) {
-            for (let i = 0; i < alleDaten.length; i++) {
-                if (alleDaten[i].EMail == datenObjekt.EMail && (alleDaten[i].Password == datenObjekt.Password)) {
-                    return "Erfolgreich angemeldet.";
-                }
+var Abgabe_3;
+(function (Abgabe_3) {
+    //Registrierung und Login
+    if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "index.html" || window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "login.html") {
+        let submit = document.getElementById("submit");
+        let form = document.getElementById("form");
+        let antwort = document.getElementById("antwort");
+        let weg = document.getElementById("weg");
+        submit.addEventListener("click", function () { send(); });
+        async function send() {
+            let _url = "https://ermir-gis.herokuapp.com/";
+            let formdata = new FormData(form);
+            let query = new URLSearchParams(formdata);
+            if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "index.html") {
+                _url = _url + "/index";
             }
-        }
-        return "Falsche E-Mail Adresse oder Passwort.";
-    }
-    async function alleAbrufen() {
-        let alleDaten = await daten.find().toArray();
-        return alleDaten;
-    }
-    async function namenAbrufen() {
-        let alleDaten = await daten.find().toArray();
-        let alleNamen = "";
-        let zahl = 1;
-        if (alleDaten.length < 1) {
-            return "Keine Nutzer";
-        }
-        for (let x = 0; x < alleDaten.length; x++) {
-            alleNamen = alleNamen + zahl + ". " + alleDaten[x].Fname + " " + alleDaten[x].Sname + ". ";
-            zahl++;
-        }
-        return alleNamen;
-    }
-    function registrierung(alleDaten, storeDaten) {
-        let daten1 = JSON.stringify(storeDaten);
-        let datenObjekt = JSON.parse(daten1);
-        if (alleDaten.length > 0) {
-            for (let x = 0; x < alleDaten.length; x++) {
-                if (alleDaten[x].EMail == datenObjekt.EMail) {
-                    return alleDaten[0].Bild;
-                }
+            else {
+                _url = _url + "/login";
             }
+            _url = _url + "?" + query.toString();
+            let response = await fetch(_url);
+            let data = await response.text();
+            antwort.innerText = data;
+            weg.innerText = data;
         }
-        daten.insertOne(storeDaten);
-        return alleDaten[0].Bild;
     }
-})(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
+    if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "benutzerliste.html") {
+        let submit = document.getElementById("submit");
+        let antwort = document.getElementById("antwort");
+        submit.addEventListener("click", send);
+        async function send() {
+            let _url = "https://ermir-gis.herokuapp.com/";
+            antwort.innerText = "";
+            _url = _url + "/benutzerliste";
+            let response = await fetch(_url);
+            let data = await response.text();
+            antwort.innerText = data;
+        }
+    }
+})(Abgabe_3 || (Abgabe_3 = {}));
 //# sourceMappingURL=script.js.map

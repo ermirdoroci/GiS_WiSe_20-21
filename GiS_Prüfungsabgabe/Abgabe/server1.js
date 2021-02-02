@@ -97,4 +97,4 @@ var P_3_1Server;
         return alleDaten[0].Bild;
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
-//# sourceMappingURL=server.js.map
+//# sourceMappingURL=server1.js.map

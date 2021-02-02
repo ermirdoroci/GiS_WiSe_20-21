@@ -10,7 +10,7 @@
     "@types/node": "^14.14.12"
   },
   "scripts": {
-    "start": "node GiS_Prüfungsabgabe/Abgabe/script.js"
+    "start": "node GiS_Prüfungsabgabe/Abgabe/server.js"
   },
   "repository": {
     "type": "git",
