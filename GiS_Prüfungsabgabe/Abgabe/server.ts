@@ -150,15 +150,15 @@ export namespace P_3_1Server {
 
             for (let x: number = 0; x < alleDaten.length; x++) {
 
-                if (alleDaten[x].EMail == datenObjekt.EMail) { return alleDaten[0].Bild; }
+                if (alleDaten[x].EMail == datenObjekt.EMail) { return "huhu"; }
 
             }
 
         }
 
         daten.insertOne(storeDaten);
-
-        return alleDaten[0].Bild;
+        return "huhu";
+       // return alleDaten[0].Bild;
 
 
 

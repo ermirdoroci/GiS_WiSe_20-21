@@ -10,7 +10,6 @@ namespace Abgabe_3 {
     let submit: HTMLElement = document.getElementById("submit");
     let form: HTMLFormElement = <HTMLFormElement>document.getElementById("form");
     let antwort: HTMLElement = document.getElementById("antwort");
-    let weg: HTMLElement = document.getElementById("weg");
 
     submit.addEventListener("click", function (): void { send(); });
 
@@ -18,7 +17,7 @@ namespace Abgabe_3 {
 
     async function send(): Promise<void> {
 
-      let _url: string = "https://ermir-gis.herokuapp.com/";
+      let _url: string = "https://ermir.herokuapp.com/";
       let formdata: FormData = new FormData(form);
       let query: URLSearchParams = new URLSearchParams(<URLSearchParams>formdata);
 
@@ -35,7 +34,7 @@ namespace Abgabe_3 {
       let data: string = await response.text();
 
       antwort.innerText = data;
-      weg.innerText = data;
+      console.log(data);
     }
 
   }
@@ -55,7 +54,7 @@ namespace Abgabe_3 {
 
     async function send(): Promise<void> {
 
-      let _url: string = "https://ermir-gis.herokuapp.com/";
+      let _url: string = "https://ermir.herokuapp.com/";
 
       antwort.innerText = "";
 

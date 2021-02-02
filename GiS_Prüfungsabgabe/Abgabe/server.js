@@ -89,12 +89,13 @@ var P_3_1Server;
         if (alleDaten.length > 0) {
             for (let x = 0; x < alleDaten.length; x++) {
                 if (alleDaten[x].EMail == datenObjekt.EMail) {
-                    return alleDaten[0].Bild;
+                    return "huhu";
                 }
             }
         }
         daten.insertOne(storeDaten);
-        return alleDaten[0].Bild;
+        return "huhu";
+        // return alleDaten[0].Bild;
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //# sourceMappingURL=server.js.map
