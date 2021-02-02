@@ -89,12 +89,12 @@ var P_3_1Server;
         if (alleDaten.length > 0) {
             for (let x = 0; x < alleDaten.length; x++) {
                 if (alleDaten[x].EMail == datenObjekt.EMail) {
-                    return "E-Mail Adresse ist bereits in unserer Datenbank.";
+                    return alleDaten[0].Bild;
                 }
             }
         }
         daten.insertOne(storeDaten);
-        return "Daten wurden abgespeichert";
+        return alleDaten[0].Bild;
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //# sourceMappingURL=script.js.map

@@ -13,6 +13,7 @@ namespace Abgabe_3 {
     let antwort: HTMLElement = document.getElementById("antwort");
 
 
+
     submit.addEventListener("click", function (): void { send(); });
 
 
@@ -36,6 +37,7 @@ namespace Abgabe_3 {
       let data: string = await response.text();
 
       antwort.innerText = data;
+
 
     }
 

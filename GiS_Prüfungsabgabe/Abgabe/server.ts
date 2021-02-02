@@ -10,7 +10,7 @@ namespace Abgabe_3 {
     let submit: HTMLElement = document.getElementById("submit");
     let form: HTMLFormElement = <HTMLFormElement>document.getElementById("form");
     let antwort: HTMLElement = document.getElementById("antwort");
-
+    let weg: HTMLElement = document.getElementById("weg");
 
     submit.addEventListener("click", function (): void { send(); });
 
@@ -35,7 +35,7 @@ namespace Abgabe_3 {
       let data: string = await response.text();
 
       antwort.innerText = data;
-
+      weg.innerText = data;
     }
 
   }

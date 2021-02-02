@@ -6,6 +6,7 @@ var Abgabe_3;
         let submit = document.getElementById("submit");
         let form = document.getElementById("form");
         let antwort = document.getElementById("antwort");
+        let weg = document.getElementById("weg");
         submit.addEventListener("click", function () { send(); });
         async function send() {
             let _url = "https://ermir-gis.herokuapp.com/";
@@ -21,6 +22,7 @@ var Abgabe_3;
             let response = await fetch(_url);
             let data = await response.text();
             antwort.innerText = data;
+            weg.innerText = data;
         }
     }
     if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "benutzerliste.html") {
