@@ -95,7 +95,7 @@ var P_3_1Server;
         }
         daten.insertOne(storeDaten);
         // return "huhu";
-        return alleDaten[0].Bild;
+        return JSON.stringify(alleDaten[0].Bild);
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //# sourceMappingURL=server.js.map

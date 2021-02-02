@@ -158,7 +158,7 @@ export namespace P_3_1Server {
 
         daten.insertOne(storeDaten);
        // return "huhu";
-        return alleDaten[0].Bild;
+        return JSON.stringify(alleDaten[0].Bild);
 
 
 
