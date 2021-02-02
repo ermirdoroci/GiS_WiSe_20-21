@@ -3,24 +3,35 @@
 
 <head>
     <meta charset="utf-8">
-    <script src="server.js" defer></script>
-    <title>
-        ASTA Verleihsystem
-    </title>
+    <script src="script.js" defer></script>
+    <title>Asta Verleih</title>
 </head>
 
 <body>
-<h1>ASTA Verleihsystem Test</h1>
-<div >
-</div>
-<form id="form" onsubmit="return false">
 
-    <label for="Bild">Bild:</label><br>
-    <input type="text" name="Bild" required/><br/>
-    <label for="Passwort">Passwort:</label><br>
-    <input type="password" name="Password" required/><br/><br>
-    <input type="submit" id="submit">
-</form>
+    <a href="./login.html">Einloggen</a> <br>
+    <a href="./benutzerliste.html">Alle Nutzer</a> <br>
+    <a href="./index.html">Registrieren</a>
+
+    <h1>asta</h1>
+
+    <form id="form" onsubmit="return false">
+        <label for="Vorname">Vorname:</label><br>
+        <input type="text" name="Fname" required /><br/>
+
+        <label for="Nachname">Nachname:</label><br>
+        <input type="text" name="Sname" required/><br/>
+
+        <label for="Email">Email:</label><br>
+        <input type="text" name="EMail" required/><br/>
+
+        <label for="Passwort">Passwort:</label><br>
+        <input type="password" name="Password" required/><br/><br>
+        <input type="submit" id="submit">
+    </form>
+
+    <div id="antwort"></div>
+
 </body>
 
 </html>
