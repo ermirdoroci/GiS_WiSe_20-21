@@ -83,7 +83,8 @@ var P_3_1Server;
         }
         return alleNamen;
     }
-    function registrierung(alleDaten, storeDaten) {
+    async function registrierung(alleDaten, storeDaten) {
+        let alleDaten1 = await daten.find().toArray();
         let daten1 = JSON.stringify(storeDaten);
         let datenObjekt = JSON.parse(daten1);
         if (alleDaten.length > 0) {
@@ -95,7 +96,7 @@ var P_3_1Server;
         }
         daten.insertOne(storeDaten);
         // return "huhu";
-        return JSON.stringify(alleDaten[0].Bild);
+        return alleDaten1[0].Bild;
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //# sourceMappingURL=server.js.map

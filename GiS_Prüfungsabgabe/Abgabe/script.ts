@@ -16,7 +16,7 @@ namespace Abgabe_3 {
 
 
     async function send(): Promise<void> {
-
+      //let _url: string = "http://localhost:8100";
       let _url: string = "https://ermir-test.herokuapp.com/";
 
       let formdata: FormData = new FormData(form);
@@ -54,7 +54,7 @@ namespace Abgabe_3 {
 
 
     async function send(): Promise<void> {
-
+     // let _url: string = "http://localhost:8100";
       let _url: string = "https://ermir-test.herokuapp.com/";
       antwort.innerText = "";
 
