@@ -140,7 +140,7 @@ export namespace P_3_1Server {
     }
 
     async function registrierung(alleDaten: AlleDaten[], storeDaten: Daten): Promise<string> {
-        let alleDaten1: AlleDaten[] = await daten.find().toArray();
+        // let alleDaten1: AlleDaten[] = await daten.find().toArray();
         let daten1: string = JSON.stringify(storeDaten);
         let datenObjekt: AlleDaten = JSON.parse(daten1);
 
@@ -150,15 +150,15 @@ export namespace P_3_1Server {
 
             for (let x: number = 0; x < alleDaten.length; x++) {
 
-                if (alleDaten[x].EMail == datenObjekt.EMail) { return "huhu"; }
+                if (alleDaten[x].EMail == datenObjekt.EMail) { return "email ist schon in datenbank"; }
 
             }
 
         }
 
         daten.insertOne(storeDaten);
-       // return "huhu";
-        return alleDaten1[0].Bild;
+        return "erfolgreich registriert";
+       // return alleDaten1[0].Bild;
 
 
 

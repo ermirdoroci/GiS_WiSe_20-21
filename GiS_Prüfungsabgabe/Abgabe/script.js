@@ -8,7 +8,7 @@ var Abgabe_3;
         let antwort = document.getElementById("antwort");
         submit.addEventListener("click", function () { send(); });
         async function send() {
-            //let _url: string = "http://localhost:8100";
+            //let _url: string = "http://localhost:8100/";
             let _url = "https://ermir-test.herokuapp.com/";
             let formdata = new FormData(form);
             let query = new URLSearchParams(formdata);
@@ -20,6 +20,7 @@ var Abgabe_3;
             }
             _url = _url + "?" + query.toString();
             let response = await fetch(_url);
+            console.log(response);
             let data = await response.text();
             antwort.innerText = data;
             console.log(data);
@@ -30,7 +31,7 @@ var Abgabe_3;
         let antwort = document.getElementById("antwort");
         submit.addEventListener("click", send);
         async function send() {
-            // let _url: string = "http://localhost:8100";
+            // let _url: string = "http://localhost:8100/";
             let _url = "https://ermir-test.herokuapp.com/";
             antwort.innerText = "";
             _url = _url + "/benutzerliste";

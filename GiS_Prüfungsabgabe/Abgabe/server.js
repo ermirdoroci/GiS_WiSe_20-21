@@ -84,19 +84,19 @@ var P_3_1Server;
         return alleNamen;
     }
     async function registrierung(alleDaten, storeDaten) {
-        let alleDaten1 = await daten.find().toArray();
+        // let alleDaten1: AlleDaten[] = await daten.find().toArray();
         let daten1 = JSON.stringify(storeDaten);
         let datenObjekt = JSON.parse(daten1);
         if (alleDaten.length > 0) {
             for (let x = 0; x < alleDaten.length; x++) {
                 if (alleDaten[x].EMail == datenObjekt.EMail) {
-                    return "huhu";
+                    return "email ist schon in datenbank";
                 }
             }
         }
         daten.insertOne(storeDaten);
-        // return "huhu";
-        return alleDaten1[0].Bild;
+        return "erfolgreich registriert";
+        // return alleDaten1[0].Bild;
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //# sourceMappingURL=server.js.map
