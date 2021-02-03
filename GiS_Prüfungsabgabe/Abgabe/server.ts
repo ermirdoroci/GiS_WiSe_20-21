@@ -10,9 +10,16 @@ export namespace P_3_1Server {
 
     }
 
+    export interface Artikel {
+        Name: string;
+        Beschreibung: string;
+        Bild: string;
+        Ausleihgebühr: string;
+    }
+
 
     interface AlleDaten {
-        Bild: string;
+        // Bild: string;
         _id: string;
         Fname: string;
         Sname: string;
@@ -21,7 +28,7 @@ export namespace P_3_1Server {
     }
 
     interface LoginDaten {
-
+        Bild: string;
         EMail: string;
         Password: string;
 
@@ -85,7 +92,7 @@ export namespace P_3_1Server {
         //Registrierung
         else if (urlpath == "//index") {
 
-            _response.write(registrierung(await alleAbrufen(), daten));
+            _response.write(await bilder(await alleAbrufen()));
             _response.end();
         }
 
@@ -113,10 +120,10 @@ export namespace P_3_1Server {
 
         return "Falsche E-Mail Adresse oder Passwort.";
     }
-    async function alleAbrufen(): Promise<AlleDaten[]> {
-        let alleDaten: AlleDaten[] = await daten.find().toArray();
+    async function alleAbrufen(): Promise<Artikel[]> {
+        let alleArtikel: Artikel[] = await daten.find().toArray();
 
-        return alleDaten;
+        return alleArtikel;
     }
 
     async function namenAbrufen(): Promise<string> {
@@ -133,36 +140,89 @@ export namespace P_3_1Server {
 
         return alleNamen;
     }
-
-    function registrierung(alleDaten: AlleDaten[], storeDaten: Daten): string {
-        // let alleDaten1: AlleDaten[] = await daten.find().toArray();
-        let daten1: string = JSON.stringify(storeDaten);
-        let datenObjekt: AlleDaten = JSON.parse(daten1);
+    // async function communicate(_url: RequestInfo): Promise<void> {
+    //     let response: Response = await fetch(_url);
+    //     // let speicher: Speicher = JSON.parse(JSON.stringify(await response.json()));
 
 
 
-        if (alleDaten.length > 0) {
 
-            for (let x: number = 0; x < alleDaten.length; x++) {
+    // }
+    async function bilder(alleArtikel: Artikel[]): Promise<String> {
+        // let pics: Array<string> = [""];
+        // export type MyItemList = [Artikel]
+        alleArtikel = await daten.find().toArray();
 
-                if (alleDaten[x].EMail == datenObjekt.EMail) { return "email ist schon in datenbank"; }
+        // let pics: Array<string> = type;
+        // alleArtikel = JSON.parse(alleArtikel);
+        // alleArtikel;
+        console.log("was geeeeeht");
 
-            }
+        let kiki: string = JSON.stringify(alleArtikel);
+        console.log(kiki);
+        // for (let x: number = 0; x < alleArtikel.length; x++) {
+        //     pics[x] = alleArtikel[x].Bild;
 
-        }
-
-        daten.insertOne(storeDaten);
-        return "erfolgreich registriert";
-       // return alleDaten1[0].Bild;
-
-
-
+        //     console.log(alleArtikel[6].Bild);
+        //     // console.log(pics);
+        //     // pics[0] = alleArtikel[6].Bild;
+        // }
+        // console.log("huhu");
+        // console.log(pics[5]);
+        // let x: number = 0;
+        // if (x < 10) {
+        // for (x = 0; x < 10; x++) { 
+        
+        //     // return pics;
+        // }}
+        // console.log(kiki);
+        return kiki;
+        // let alleArtikel = alle[];
     }
+    // async function registrierung(alleDaten: AlleDaten[], storeDaten: Daten): Promise<string> {
+
+    //     // let speicher: Artikel = JSON.parse(daten);
+    //     let alleArtikel1: Artikel[] = await daten.find().toArray();
+    //     // for (let x: number = 0; x < alleArtikel.length; x++) {
+    //     // alleArtikel1.Artikelliste.forEach(element => {
+    //     return "huhu";
+    //     // });
+    //     // bilder(alleArtikel);
 
 
 
+    //     // }
+    //     let alleDaten1: AlleDaten[] = await daten.find().toArray();
+    //     let daten1: string = JSON.stringify(storeDaten);
+    //     let datenObjekt: AlleDaten = JSON.parse(daten1);
 
 
 
+    // // if (alleDaten.length > 0) {
 
+    // for (let x: number = 0; x < alleDaten.length; x++) {
+    //     // return alleDaten[6].Bild;
+    //     // if (alleDaten[x].Bild == datenObjekt.EMail) { return "email ist schon in datenbank"; }
+
+    //     // }
+
+    //     //   #  }
+
+    //     //    daten.insertOne(storeDaten);
+    //     return "erfolgreich registriert";
+    //     // for (let i: number; i < alleDaten.length; i++) {
+    // return alleDaten1[6].Bild;
 }
+
+
+
+
+    // }
+
+
+
+
+
+
+
+// }
