@@ -16,8 +16,9 @@ namespace Abgabe_3 {
 
 
     async function send(): Promise<void> {
+      console.log("1");
       //let _url: string = "http://localhost:8100/";
-      let _url: string = "https://ermir-test.herokuapp.com/";
+      let _url: string = "https://ermir-gis.herokuapp.com/";
 
       let formdata: FormData = new FormData(form);
       let query: URLSearchParams = new URLSearchParams(<URLSearchParams>formdata);
@@ -54,8 +55,10 @@ namespace Abgabe_3 {
 
 
     async function send(): Promise<void> {
+      console.log("2");
+    
      // let _url: string = "http://localhost:8100/";
-      let _url: string = "https://ermir-test.herokuapp.com/";
+      let _url: string = "https://ermir-gis.herokuapp.com/";
       antwort.innerText = "";
 
       _url = _url + "/benutzerliste";

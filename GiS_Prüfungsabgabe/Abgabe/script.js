@@ -8,8 +8,9 @@ var Abgabe_3;
         let antwort = document.getElementById("antwort");
         submit.addEventListener("click", function () { send(); });
         async function send() {
+            console.log("1");
             //let _url: string = "http://localhost:8100/";
-            let _url = "https://ermir-test.herokuapp.com/";
+            let _url = "https://ermir-gis.herokuapp.com/";
             let formdata = new FormData(form);
             let query = new URLSearchParams(formdata);
             if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "index.html") {
@@ -31,8 +32,9 @@ var Abgabe_3;
         let antwort = document.getElementById("antwort");
         submit.addEventListener("click", send);
         async function send() {
+            console.log("2");
             // let _url: string = "http://localhost:8100/";
-            let _url = "https://ermir-test.herokuapp.com/";
+            let _url = "https://ermir-gis.herokuapp.com/";
             antwort.innerText = "";
             _url = _url + "/benutzerliste";
             let response = await fetch(_url);
