@@ -68,35 +68,49 @@ export namespace P_3_1Server {
         console.log("Listening");
     }
     async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): Promise<void> {
-        console.log("test123");
-        let adresse: url.UrlWithParsedQuery = url.parse(_request.url, true);
-        let urlpath: string | null = adresse.pathname;
+        if (_request.method == "GET") {
 
-        let daten: Daten = adresse.query;
+            let body: string = "";
+            body = body;
+
+            _request.on("data", data => {
+                body += data;
+            });
+
+            _request.on("end", async () => {
+
+                console.log("test123");
+                let adresse: url.UrlWithParsedQuery = url.parse(_request.url, true);
+                let urlpath: string | null = adresse.pathname;
+                console.log(urlpath);
+                let daten: Daten = adresse.query;
 
 
-        _response.setHeader("content-type", "text/html; charset=utf-8");
-        _response.setHeader("Access-Control-Allow-Origin", "*");
-        // let daten: Daten = querystring.parse(body);
-        //Alle User abfragen
-        if (urlpath == "//benutzerliste") {
-            _response.write(await namenAbrufen());
-            _response.end();
+                _response.setHeader("content-type", "text/html; charset=utf-8");
+                _response.setHeader("Access-Control-Allow-Origin", "*");
+                // let daten: Daten = querystring.parse(body);
+                //Alle User abfragen
+                if (urlpath == "//benutzerliste") {
+                    _response.write(await namenAbrufen());
+                    _response.end();
+                }
+                //Login
+                else if (urlpath == "//login") {
+                    _response.write(await login(daten));
+                    _response.end();
+
+                }
+                //Registrierung
+                else if (urlpath == "/index" && "bestaetigung") {
+                    console.log("einfach irgendwas");
+
+                    _response.write(await bilder(await alleAbrufen()));
+                    _response.end();
+                }
+
+            });
+
         }
-        //Login
-        else if (urlpath == "//login") {
-            _response.write(await login(daten));
-            _response.end();
-
-        }
-        //Registrierung
-        else if (urlpath == "//index") {
-
-            _response.write(await bilder(await alleAbrufen()));
-            _response.end();
-        }
-
-
 
 
 
@@ -172,7 +186,7 @@ export namespace P_3_1Server {
         // let x: number = 0;
         // if (x < 10) {
         // for (x = 0; x < 10; x++) { 
-        
+
         //     // return pics;
         // }}
         // console.log(kiki);
