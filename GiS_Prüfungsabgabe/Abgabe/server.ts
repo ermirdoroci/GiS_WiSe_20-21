@@ -10,33 +10,13 @@ export namespace P_3_1Server {
 
     }
 
-    export interface Artikel {
+    interface Artikel {
         Name: string;
-        Beschreibung: string;
         Bild: string;
-        Ausleihgebühr: string;
     }
-
-
-    interface AlleDaten {
-        // Bild: string;
-        _id: string;
-        Fname: string;
-        Sname: string;
-        EMail: string;
-        Password: string;
-    }
-
-    interface LoginDaten {
-        Bild: string;
-        EMail: string;
-        Password: string;
-
-    }
-
 
     let daten: Mongo.Collection;
-
+    let highscore: Mongo.Collection;
 
     let port: number = Number(process.env.PORT);
     if (!port)
@@ -44,8 +24,6 @@ export namespace P_3_1Server {
 
     let pfadDatenbank: string = "mongodb+srv://babo:gis2021@ermir.jqdwu.mongodb.net/Daten?retryWrites=true&w=majority";
 
-
-    // Starte Server auf Port 8100
     let server: Http.Server = Http.createServer();
     server.addListener("request", handleRequest);
     server.addListener("listening", handleListen);
@@ -63,6 +41,7 @@ export namespace P_3_1Server {
         console.log("Database connected");
 
         daten = mongoClient.db("Daten").collection("Collection");
+        highscore = mongoClient.db("Daten").collection("highscore");
     }
     function handleListen(): void {
         console.log("Listening");
@@ -83,160 +62,63 @@ export namespace P_3_1Server {
                 let adresse: url.UrlWithParsedQuery = url.parse(_request.url, true);
                 let urlpath: string | null = adresse.pathname;
                 console.log(urlpath);
-                let daten: Daten = adresse.query;
+                let data: Daten = adresse.query;
 
 
                 _response.setHeader("content-type", "text/html; charset=utf-8");
                 _response.setHeader("Access-Control-Allow-Origin", "*");
-                // let daten: Daten = querystring.parse(body);
-                //Alle User abfragen
-                if (urlpath == "//benutzerliste") {
-                    _response.write(await namenAbrufen());
-                    _response.end();
-                }
-                //Login
-                else if (urlpath == "//login") {
-                    _response.write(await login(daten));
-                    _response.end();
-
-                }
-                //Registrierung
-                else if (urlpath == "/index" && "bestaetigung") {
-                    console.log("einfach irgendwas");
+                if (urlpath == "/index") {
 
                     _response.write(await bilder(await alleAbrufen()));
                     _response.end();
                 }
 
+                else if (urlpath == "/highscore") {
+                    console.log(data.score);
+                    await highscore.insertOne({ name: data.name, highscore: data.score });
+                    _response.write("saved");
+                    _response.end();
+                }
+
+                else if (urlpath == "/gethighscore") {
+
+
+                    _response.write(JSON.stringify(await highscore.find().sort({ highscore: 1 }).toArray()));
+                    _response.end();
+                }
+
+                else if (urlpath == "/loeschen") {
+
+                    await daten.findOneAndDelete({ Bild: data.name });
+                    _response.write("Gelöscht");
+                    _response.end();
+                }
+
+                else if (urlpath == "/hinzufuegen") {
+
+                    await daten.insertOne({ Bild: data.name });
+                    _response.write("Hinzugefügt");
+                    _response.end();
+                }
+
+
             });
-
         }
 
-
-
-
     }
-
-    async function login(daten1: Daten): Promise<string> {
-        let alleDaten: AlleDaten[] = await daten.find().toArray();
-
-        let datenObjekt: LoginDaten = JSON.parse(JSON.stringify(daten1));
-
-        if (alleDaten.length > 0) {
-
-            for (let i: number = 0; i < alleDaten.length; i++) {
-
-                if (alleDaten[i].EMail == datenObjekt.EMail && (alleDaten[i].Password == datenObjekt.Password)) { return "Erfolgreich angemeldet."; }
-
-            }
-
-        }
-
-        return "Falsche E-Mail Adresse oder Passwort.";
-    }
+    
     async function alleAbrufen(): Promise<Artikel[]> {
         let alleArtikel: Artikel[] = await daten.find().toArray();
 
         return alleArtikel;
     }
-
-    async function namenAbrufen(): Promise<string> {
-        let alleDaten: AlleDaten[] = await daten.find().toArray();
-        let alleNamen: string = "";
-        let zahl: number = 1;
-
-        if (alleDaten.length < 1) { return "Keine Nutzer"; }
-
-        for (let x: number = 0; x < alleDaten.length; x++) {
-            alleNamen = alleNamen + zahl + ". " + alleDaten[x].Fname + " " + alleDaten[x].Sname + ". ";
-            zahl++;
-        }
-
-        return alleNamen;
-    }
-    // async function communicate(_url: RequestInfo): Promise<void> {
-    //     let response: Response = await fetch(_url);
-    //     // let speicher: Speicher = JSON.parse(JSON.stringify(await response.json()));
-
-
-
-
-    // }
     async function bilder(alleArtikel: Artikel[]): Promise<String> {
-        // let pics: Array<string> = [""];
-        // export type MyItemList = [Artikel]
         alleArtikel = await daten.find().toArray();
-
-        // let pics: Array<string> = type;
-        // alleArtikel = JSON.parse(alleArtikel);
-        // alleArtikel;
-        console.log("was geeeeeht");
-
         let kiki: string = JSON.stringify(alleArtikel);
-        console.log(kiki);
-        // for (let x: number = 0; x < alleArtikel.length; x++) {
-        //     pics[x] = alleArtikel[x].Bild;
-
-        //     console.log(alleArtikel[6].Bild);
-        //     // console.log(pics);
-        //     // pics[0] = alleArtikel[6].Bild;
-        // }
-        // console.log("huhu");
-        // console.log(pics[5]);
-        // let x: number = 0;
-        // if (x < 10) {
-        // for (x = 0; x < 10; x++) { 
-
-        //     // return pics;
-        // }}
-        // console.log(kiki);
+        
         return kiki;
-        // let alleArtikel = alle[];
+
     }
-    // async function registrierung(alleDaten: AlleDaten[], storeDaten: Daten): Promise<string> {
-
-    //     // let speicher: Artikel = JSON.parse(daten);
-    //     let alleArtikel1: Artikel[] = await daten.find().toArray();
-    //     // for (let x: number = 0; x < alleArtikel.length; x++) {
-    //     // alleArtikel1.Artikelliste.forEach(element => {
-    //     return "huhu";
-    //     // });
-    //     // bilder(alleArtikel);
-
-
-
-    //     // }
-    //     let alleDaten1: AlleDaten[] = await daten.find().toArray();
-    //     let daten1: string = JSON.stringify(storeDaten);
-    //     let datenObjekt: AlleDaten = JSON.parse(daten1);
-
-
-
-    // // if (alleDaten.length > 0) {
-
-    // for (let x: number = 0; x < alleDaten.length; x++) {
-    //     // return alleDaten[6].Bild;
-    //     // if (alleDaten[x].Bild == datenObjekt.EMail) { return "email ist schon in datenbank"; }
-
-    //     // }
-
-    //     //   #  }
-
-    //     //    daten.insertOne(storeDaten);
-    //     return "erfolgreich registriert";
-    //     // for (let i: number; i < alleDaten.length; i++) {
-    // return alleDaten1[6].Bild;
+   
 }
 
-
-
-
-    // }
-
-
-
-
-
-
-
-// }
