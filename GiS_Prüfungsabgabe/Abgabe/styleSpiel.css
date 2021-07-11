@@ -1,0 +1,51 @@
+
+h1 {
+    text-align: center;
+    text-shadow:0 0 5px #000000;
+    color: rgb(255, 255, 255);
+    font-size: 60px;
+}
+
+body {
+    background-image: url("./hintergrund/imag.jpg");
+    background-repeat: inherit;
+    align-content: center;
+    padding: 28px;
+}
+
+#spiel {
+    display: grid;
+    grid-template-columns: repeat(4, 251px);
+    justify-content: center;
+}
+
+#counter {
+    border: 2px solid rgb(255, 0, 0);
+    background-color: rgba(255, 255, 255, 0.644);
+    position:absolute;
+    color: red;
+    font-size: 42px;
+}
+
+img {
+    height: 250px;
+    width: 250px;
+    padding: 1px;
+}
+
+div {
+text-align: right;
+color: red;
+font-size: 30px;
+}
+
+@media screen and (max-width: 480px){
+    #spiel {
+        grid-template-columns: repeat(4, 126px)
+    }
+    
+    img {
+        height: 125px;
+        width: 125px;
+    }   
+}
