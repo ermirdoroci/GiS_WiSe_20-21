@@ -10,7 +10,7 @@ namespace Modulprüfung {
     spielen();
     async function spielen(): Promise<void> {
       let sekunden: number = 1;
-      let _url: string = "https://ermir-test.herokuapp.com/";
+      let _url: string = "https://ermir-modul.herokuapp.com/";
       let response: Response = await fetch(_url);
       let data: string = await response.text();
       let timer: HTMLElement = document.getElementById("counter");
@@ -108,7 +108,7 @@ namespace Modulprüfung {
     async function submit_highscore(): Promise<void> {
 
 
-      let _url: string = "https://ermir-test.herokuapp.com/highscore" + "?" + "name=" + localStorage.getItem("name") + "&" + "score=" + localStorage.getItem("score");
+      let _url: string = "https://ermir-modul.herokuapp.com/highscore" + "?" + "name=" + localStorage.getItem("name") + "&" + "score=" + localStorage.getItem("score");
       let response: Response = await fetch(_url);
       let data: string = await response.text();
 
@@ -133,7 +133,7 @@ if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/")
   get_highscore();
   async function get_highscore(): Promise<void> {
 
-    let _url: string = "https://ermir-test.herokuapp.com/gethighscore";
+    let _url: string = "https://ermir-modul.herokuapp.com/gethighscore";
     let response: Response = await fetch(_url);
     let text: string = await response.text();
     let data: Highscore[] = JSON.parse(text);
@@ -167,7 +167,7 @@ if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/")
   async function admin(): Promise<void> {
 
 
-    let _url: string = "https://ermir-test.herokuapp.com/";
+    let _url: string = "https://ermir-modul.herokuapp.com/";
 
     let response: Response = await fetch(_url);
 
@@ -190,7 +190,7 @@ if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/")
 
     let antwort: HTMLElement = document.getElementById("antwort");
 
-    let _url: string = "https://ermir-test.herokuapp.com/loeschen" + "?" + "name=" + ausgewählt;
+    let _url: string = "https://ermir-modul.herokuapp.com/loeschen" + "?" + "name=" + ausgewählt;
     let response: Response = await fetch(_url);
     let text: string = await response.text();
 
@@ -206,7 +206,7 @@ if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/")
 
     let antwort: HTMLElement = document.getElementById("antwort");
 
-    let _url: string = "https://ermir-test.herokuapp.com/hinzufuegen" + "?" + "name=" + formData.get("name").toString();
+    let _url: string = "https://ermir-modul.herokuapp.com/hinzufuegen" + "?" + "name=" + formData.get("name").toString();
     let response: Response = await fetch(_url);
     let text: string = await response.text();
     antwort.innerText = text;

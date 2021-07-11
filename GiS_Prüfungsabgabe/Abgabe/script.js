@@ -5,7 +5,7 @@ var Modulprüfung;
         spielen();
         async function spielen() {
             let sekunden = 1;
-            let _url = "https://ermir-test.herokuapp.com/";
+            let _url = "https://ermir-modul.herokuapp.com/";
             let response = await fetch(_url);
             let data = await response.text();
             let timer = document.getElementById("counter");
@@ -87,7 +87,7 @@ var Modulprüfung;
             submit_highscore();
         }
         async function submit_highscore() {
-            let _url = "https://ermir-test.herokuapp.com/highscore" + "?" + "name=" + localStorage.getItem("name") + "&" + "score=" + localStorage.getItem("score");
+            let _url = "https://ermir-modul.herokuapp.com/highscore" + "?" + "name=" + localStorage.getItem("name") + "&" + "score=" + localStorage.getItem("score");
             let response = await fetch(_url);
             let data = await response.text();
             if (data == "saved") {
@@ -99,7 +99,7 @@ var Modulprüfung;
 if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "highscore.html") {
     get_highscore();
     async function get_highscore() {
-        let _url = "https://ermir-test.herokuapp.com/gethighscore";
+        let _url = "https://ermir-modul.herokuapp.com/gethighscore";
         let response = await fetch(_url);
         let text = await response.text();
         let data = JSON.parse(text);
@@ -123,7 +123,7 @@ if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/")
     let ausgewählt = "";
     admin();
     async function admin() {
-        let _url = "https://ermir-test.herokuapp.com/";
+        let _url = "https://ermir-modul.herokuapp.com/";
         let response = await fetch(_url);
         let data = await response.text();
         let speicher = JSON.parse(data);
@@ -138,7 +138,7 @@ if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/")
     }
     async function loeschen() {
         let antwort = document.getElementById("antwort");
-        let _url = "https://ermir-test.herokuapp.com/loeschen" + "?" + "name=" + ausgewählt;
+        let _url = "https://ermir-modul.herokuapp.com/loeschen" + "?" + "name=" + ausgewählt;
         let response = await fetch(_url);
         let text = await response.text();
         antwort.innerText = text;
@@ -147,7 +147,7 @@ if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/")
         let form = document.getElementById("name");
         let formData = new FormData(form);
         let antwort = document.getElementById("antwort");
-        let _url = "https://ermir-test.herokuapp.com/hinzufuegen" + "?" + "name=" + formData.get("name").toString();
+        let _url = "https://ermir-modul.herokuapp.com/hinzufuegen" + "?" + "name=" + formData.get("name").toString();
         let response = await fetch(_url);
         let text = await response.text();
         antwort.innerText = text;
